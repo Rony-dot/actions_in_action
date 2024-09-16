@@ -1,0 +1,27 @@
+name: GENERATE ASCII ARTWORK
+on: push
+
+jobs:
+  A_initialize:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: A.1) Clonning our repo
+        uses: actions/checkout@v4
+
+      - name: A.2) Execute/Run single command
+        run: ls -ltrh
+
+      - name: A.3) Using multiple command in one run to list and read files
+        run: |
+          echo "Github Actions in Action"
+          ls -ltrh
+          cat README.md
+
+      - name: A.4) Installing the COWSAY library for linux
+        run: sudo apt-get install cowsay -y
+
+      - name: A.5) Running COWSAY command, output save to a text file
+        run: cowthink -f gnu hello >> gnu_hello.txt
+
+      - name: A.6) Print that saved text file's content
+        run: cat gnu_hello.txt
