@@ -1,4 +1,4 @@
-name: GENERATE ASCII ARTWORK
+name: BUILD-TEST-DEPLOY ASCII ARTWORK
 on: push
 
 jobs:
