@@ -1,0 +1,45 @@
+name: GENERATE ASCII ARTWORK
+on: push
+
+jobs:
+  A_build_job:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: A.1) Clonning our repo
+        uses: actions/checkout@v4
+
+      - name: A.2) Installing the COWSAY library for linux
+        run: sudo apt-get install cowsay -y
+
+      - name: A.3) Running COWSAY command, output save to a text file
+        run: cowthink -f gnu hello >> gnu_hello.txt
+
+      - name: A.4) Upload gnu.txt file for TEST/DEPLOY JOB
+        uses: actions/upload-artifact@v4
+        with:
+          name: gnu-text-file
+          path: gnu_hello.txt
+
+  B_test_job:
+    needs: A_build_job
+    runs-on: ubuntu-24.04
+    steps:
+      - name: B.1) Download output files from previous BUILD JOB
+        uses: actions/download-artifact@v4
+        with:
+          name: gnu-text-file
+
+      - name: B.2) Test file contents
+        run: grep -iP "hello" gnu_hello.txt
+
+  C_deploy_job:
+    needs: B_test_job
+    runs-on: ubuntu-24.04
+    steps:
+      - name: C.1) Download output files from previous BUILD JOB
+        uses: actions/download-artifact@v4
+        with:
+          name: gnu-text-file
+
+      - name: C.2) Print file content
+        run: cat gnu_hello.txt
