@@ -1,0 +1,15 @@
+name: UNITTEST_REPORT
+on: push
+
+jobs:
+  A_BUILD_JOB:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: A.1) Cloning our repo
+        uses: actions/checkout@v4
+
+      - name: A.2) Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: A.3) Run the python script
+        run: python src/github_api.py
