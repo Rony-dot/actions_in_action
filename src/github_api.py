@@ -5,7 +5,9 @@ from pprint import pprint
 
 
 load_dotenv()
-PERSONAL_ACCESS_TOKEN = os.getenv("PERSONAL_ACCESS_TOKEN")
+# os.getenv() will not throw error, if key not found
+# but os.environ[] will throw error, if key not found [best practice]
+PERSONAL_ACCESS_TOKEN = os.environ["PERSONAL_ACCESS_TOKEN"]
 
 repo_owner = "PyGithub"
 repo_name = "PyGithub"
