@@ -1,5 +1,7 @@
 name: UNITTEST_REPORT
 on: push
+env:
+  PERSONAL_ACCESS_TOKEN: ${{ vars.PERSONAL_ACCESS_TOKEN }}
 
 jobs:
 
