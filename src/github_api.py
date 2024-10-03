@@ -61,7 +61,7 @@ def get_issues():
 issues = get_issues()
 
 pprint(len(issues))
-pprint("-"*50)
+pprint("-" * 50)
 pprint(issues)
-pprint("-"*50)
+pprint("-" * 50)
 pprint(get_last_commit())
