@@ -7,6 +7,7 @@ jobs:
 
   PRINT_ISSUES_AND_LAST_COMMIT:
     runs-on: ubuntu-24.04
+    environment: dev
     steps:
       - name: Cloning our repo
         uses: actions/checkout@v4
@@ -26,6 +27,7 @@ jobs:
 
   UNIT_TEST:
     runs-on: ubuntu-24.04
+    environment: dev
     steps:
       - name: Cloning our repo
         uses: actions/checkout@v4
@@ -44,6 +46,7 @@ jobs:
 
   LINTING:
     runs-on: ubuntu-24.04
+    environment: dev
     steps:
       - name: Cloning our repo
         uses: actions/checkout@v4
