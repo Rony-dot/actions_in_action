@@ -12,10 +12,10 @@ PERSONAL_ACCESS_TOKEN = os.environ["PERSONAL_ACCESS_TOKEN"]
 repo_owner = "PyGithub"
 repo_name = "PyGithub"
 
-GITHUB_BASE_URL = "https://api.github.com"
-REPO_URL = f"{GITHUB_BASE_URL}/repos/{repo_owner}/{repo_name}"
-COMMITS_URL = f"{GITHUB_BASE_URL}/repos/{repo_owner}/{repo_name}/commits?page=1"
-ISSUES_BASE_URL = f"{GITHUB_BASE_URL}/repos/{repo_owner}/{repo_name}/issues"
+GITHUB_BASE_URL = "https://api.github.com/repos"
+REPO_URL = f"{GITHUB_BASE_URL}/{repo_owner}/{repo_name}"
+COMMITS_URL = f"{GITHUB_BASE_URL}/{repo_owner}/{repo_name}/commits?page=1"
+ISSUES_BASE_URL = f"{GITHUB_BASE_URL}/{repo_owner}/{repo_name}/issues"
 
 
 def api_call(url):
@@ -24,11 +24,11 @@ def api_call(url):
         response = requests.get(url, headers=headers)
         if response.status_code != 200:
             raise Exception(
-                f"Unexpected error, status_code: {response.status_code}, url: {url}"
+                f"Error, status_code: {response.status_code}, url: {url}"
             )
 
         return response.json()
-    except:
+    except Exception:
         raise Exception(f"Error while api call: {url}")
 
 

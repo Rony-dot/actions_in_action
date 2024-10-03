@@ -3,6 +3,8 @@ on:
   push:
   workflow_dispatch:
 
+
+
 jobs:
 
   PRINT_ISSUES_AND_LAST_COMMIT:
@@ -32,6 +34,9 @@ jobs:
 
 
   UNIT_TEST:
+    on:
+      pull_request:
+        types: [opened, reopened]
     runs-on: ubuntu-24.04
     environment: dev
     env:
@@ -53,6 +58,7 @@ jobs:
         run: python3 -m unittest tests/test_github_api.py
 
   LINTING:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-24.04
     environment: dev
     env:
