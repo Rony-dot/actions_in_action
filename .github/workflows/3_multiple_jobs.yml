@@ -1,5 +1,7 @@
 name: UNITTEST_REPORT
-on: push
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
 
@@ -7,8 +9,12 @@ jobs:
     runs-on: ubuntu-24.04
     environment: dev
     env:
-      PERSONAL_ACCESS_TOKEN: ${{ vars.PERSONAL_ACCESS_TOKEN }}
+      PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
     steps:
+      - name: Tell me a secret!
+        run: |
+          echo "My existing secret is ${{ secrets.API_KEY }}"
+          echo "My existing secret environment is ${{ env.PERSONAL_ACCESS_TOKEN }}"
       - name: Cloning our repo
         uses: actions/checkout@v4
       - name: Setup python-version
@@ -29,7 +35,7 @@ jobs:
     runs-on: ubuntu-24.04
     environment: dev
     env:
-      PERSONAL_ACCESS_TOKEN: ${{ vars.PERSONAL_ACCESS_TOKEN }}
+      PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
     steps:
       - name: Cloning our repo
         uses: actions/checkout@v4
@@ -50,7 +56,7 @@ jobs:
     runs-on: ubuntu-24.04
     environment: dev
     env:
-      PERSONAL_ACCESS_TOKEN: ${{ vars.PERSONAL_ACCESS_TOKEN }}
+      PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
     steps:
       - name: Cloning our repo
         uses: actions/checkout@v4
