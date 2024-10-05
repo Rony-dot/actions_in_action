@@ -32,10 +32,17 @@ jobs:
           echo "My existing secret is ${{ secrets.API_KEY }}"
           echo "My existing secret environment is ${{ env.PERSONAL_ACCESS_TOKEN }}"
 
-      - name: Setup python-version
+      - name: Setup python-version for MANUAL TRIGGER
+        if: ${{ github.event.name == 'workflow_dispatch' }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ inputs.python_version }}
+
+      - name: Setup python-version for rest of the EVENTS
+        if: ${{ github.event.name != 'workflow_dispatch' }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.12
 
       - name: Cloning our repo
         uses: actions/checkout@v4
