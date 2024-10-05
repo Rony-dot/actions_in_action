@@ -48,10 +48,14 @@ jobs:
           path: ${{ env.pythonLocation }}
           key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
 
-      - name: Install dependencies
+      - name: log the variables and constants
         run: |
+          echo "running in environment: ${{inputs.environment}}"
           echo "cached in: ${{env.pythonLocation}}"
           echo "cached key is: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}"
+
+      - name: Install dependencies
+        run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
