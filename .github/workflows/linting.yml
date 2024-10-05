@@ -18,9 +18,9 @@ on:
         type: number
 
     secrets:
-      API_KEY:
+      PERSONAL_ACCESS_TOKEN:
         required: true
-        description: 'API_KEY is needed for accessing/query github-api'
+        description: 'PERSONAL_ACCESS_TOKEN is needed for accessing/query github-api'
 
 
   workflow_dispatch:
