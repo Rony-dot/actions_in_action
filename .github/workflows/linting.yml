@@ -3,6 +3,26 @@ name: WORKFLOW_LINTING
 on:
   push:
   pull_request:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        description: 'choose an env to run'
+        type: string
+        default: 'dev'
+
+      python_version:
+        required: true
+        description: 'choose preferred python version'
+        default: 3.12
+        type: number
+
+    secrets:
+      API_KEY:
+        required: true
+        description: 'API_KEY is needed for accessing/query github-api'
+
+
   workflow_dispatch:
     inputs:
       environment:
