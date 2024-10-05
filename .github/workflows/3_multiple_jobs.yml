@@ -132,5 +132,5 @@ jobs:
       - name: Run flake8 for syntax check
         run: flake8 src/github_api.py
 
-      - name: Run flake8 for syntax check
+      - name: Run black for formatting
         run: black src/github_api.py
