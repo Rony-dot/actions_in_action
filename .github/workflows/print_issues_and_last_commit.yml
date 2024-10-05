@@ -1,0 +1,57 @@
+name: WORKFLOW_PRINT_ISSUES_AND_LAST_COMMIT
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        description: 'choose an env to run'
+        type: environment
+        default: 'dev'
+
+      python_version:
+        required: true
+        description: 'choose preferred python version'
+        default: '3.12'
+        type: choice
+        options:
+          - 3.12
+          - 3.9
+
+jobs:
+  JOB_PRINT_ISSUES_AND_LAST_COMMIT:
+    runs-on: ubuntu-24.04
+    environment: ${{ inputs.environment }}
+    env:
+      PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+    steps:
+      - name: Tell me a secret!
+        run: |
+          echo "My existing secret is ${{ secrets.API_KEY }}"
+          echo "My existing secret environment is ${{ env.PERSONAL_ACCESS_TOKEN }}"
+
+      - name: Setup python-version
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ inputs.python_version }}
+
+      - name: Cloning our repo
+        uses: actions/checkout@v4
+
+      - name: Pull or Push Cache to cloud
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+
+      - name: Install dependencies
+        run: |
+          echo "cached in: ${{env.pythonLocation}}"
+          echo "cached key is: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}"
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run the python script
+        run: python src/github_api.py

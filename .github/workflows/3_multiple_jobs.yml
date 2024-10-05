@@ -30,12 +30,20 @@ jobs:
         run: |
           echo "My existing secret is ${{ secrets.API_KEY }}"
           echo "My existing secret environment is ${{ env.PERSONAL_ACCESS_TOKEN }}"
-      - name: Cloning our repo
-        uses: actions/checkout@v4
+
       - name: Setup python-version
         uses: actions/setup-python@v2
         with:
           python-version: ${{ inputs.python_version }}
+
+      - name: Cloning our repo
+        uses: actions/checkout@v4
+
+      - name: Pull or Push Cache to cloud
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
 
       - name: Install dependencies
         run: |
@@ -57,7 +65,13 @@ jobs:
       - name: Setup python-version
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ inputs.python_version }}
+          python-version: ${{ inputs.python_version }}\
+
+      - name: Pull or Push Cache to cloud
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
 
       - name: Install dependencies
         run: |
@@ -81,6 +95,12 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ inputs.python_version }}
+
+      - name: Pull or Push Cache to cloud
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
 
       - name: Install dependencies
         run: |

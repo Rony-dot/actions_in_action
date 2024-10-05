@@ -1,0 +1,54 @@
+name: WORKFLOW_UNIT_TEST
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        description: 'choose an env to run'
+        type: environment
+        default: 'dev'
+
+      python_version:
+        required: true
+        description: 'choose preferred python version'
+        default: '3.12'
+        type: choice
+        options:
+          - 3.12
+          - 3.9
+
+jobs:
+  JOB_UNIT_TEST:
+    runs-on: ubuntu-24.04
+    if: ${{ github.event_name == 'push' }}
+    environment: ${{ inputs.environment }}
+    env:
+      PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+    steps:
+      - name: Cloning our repo
+        uses: actions/checkout@v4
+
+      - name: Setup python-version
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ inputs.python_version }}\
+
+      - name: Pull or Push Cache to cloud
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+
+      - name: Install dependencies
+        run: |
+          echo "cached in: ${{env.pythonLocation}}"
+          echo "cached key is: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}"
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run the UNIT TEST script
+        run: python3 -m unittest tests/test_github_api.py
+
