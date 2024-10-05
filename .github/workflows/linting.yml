@@ -23,7 +23,6 @@ on:
 jobs:
   JOB_LINTING:
     runs-on: ubuntu-24.04
-    if: ${{ github.event_name == 'push' }}
     environment: ${{ inputs.environment }}
     env:
       PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
