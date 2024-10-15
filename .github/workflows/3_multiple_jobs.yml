@@ -33,7 +33,7 @@ jobs:
       - name: Tell me a secret!
         run: |
           echo "python version is: ${{ env.PYTHON_VERSION }} "
-          echo "environment is: ${{ environment }}"
+
 
       - name: Setup python-version
         uses: actions/setup-python@v2
