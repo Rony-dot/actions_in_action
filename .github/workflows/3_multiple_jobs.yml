@@ -19,31 +19,26 @@ on:
           - 3.12
           - 3.9
 
+
+env:
+  PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  PYTHON_VERSION: ${{ inputs.python_version == '' && 3.9 }}
+
+
 jobs:
   PRINT_ISSUES_AND_LAST_COMMIT:
     runs-on: ubuntu-24.04
-    environment: ${{ inputs.environment }}
-    env:
-      PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      PYTHON_VERSION: ${{ inputs.python_version }}
+    environment: ${{ inputs.environment == '' && 'dev' || inputs.environment }}
     steps:
       - name: Tell me a secret!
         run: |
-          echo "My existing secret is ${{ secrets.API_KEY }}"
-          echo "My existing secret environment is ${{ env.PERSONAL_ACCESS_TOKEN }}"
-          echo "my python version is: ${{ inputs.python_version }} "
+          echo "python version is: ${{ env.PYTHON_VERSION }} "
+          echo "environment is: ${{ environment }}"
 
-      - name: Setup python-version for MANUAL TRIGGER
-        if: ${{ github.event.name == 'workflow_dispatch' }}
+      - name: Setup python-version
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ inputs.python_version }}
-
-      - name: Setup python-version for rest of the EVENTS
-        if: ${{ github.event.name != 'workflow_dispatch' }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.12
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Cloning our repo
         uses: actions/checkout@v4
@@ -65,23 +60,14 @@ jobs:
   UNIT_TEST:
     runs-on: ubuntu-24.04
     environment: ${{ inputs.environment }}
-    env:
-      PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
     steps:
       - name: Cloning our repo
         uses: actions/checkout@v4
 
-      - name: Setup python-version for MANUAL TRIGGER
-        if: ${{ github.event.name == 'workflow_dispatch' }}
+      - name: Setup python-version
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ inputs.python_version }}
-
-      - name: Setup python-version for rest of the EVENTS
-        if: ${{ github.event.name != 'workflow_dispatch' }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.12
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Pull or Push Cache to cloud
         uses: actions/cache@v4
@@ -100,23 +86,14 @@ jobs:
   LINTING:
     runs-on: ubuntu-24.04
     environment: ${{ inputs.environment }}
-    env:
-      PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
     steps:
       - name: Cloning our repo
         uses: actions/checkout@v4
 
-      - name: Setup python-version for MANUAL TRIGGER
-        if: ${{ github.event.name == 'workflow_dispatch' }}
+      - name: Setup python-version
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ inputs.python_version }}
-
-      - name: Setup python-version for rest of the EVENTS
-        if: ${{ github.event.name != 'workflow_dispatch' }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.12
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Pull or Push Cache to cloud
         uses: actions/cache@v3

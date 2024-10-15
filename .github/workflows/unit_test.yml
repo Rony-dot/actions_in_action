@@ -45,6 +45,7 @@ jobs:
     environment: ${{ inputs.environment == '' && 'dev' || inputs.environment }}
     env:
       PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      PYTHON_VERSION: ${{ inputs.python_version == '' && 3.12 }}
     steps:
       - name: log the variables and constants
         run: |
@@ -57,17 +58,10 @@ jobs:
       - name: Cloning our repo
         uses: actions/checkout@v4
 
-      - name: Setup python-version for MANUAL TRIGGER
-        if: ${{ github.event.name == 'workflow_dispatch' }}
+      - name: Setup python-version
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ inputs.python_version }}
-
-      - name: Setup python-version for rest of the EVENTS
-        if: ${{ github.event.name != 'workflow_dispatch' }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.12
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Pull or Push Cache to cloud
         uses: actions/cache@v4
