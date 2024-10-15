@@ -41,7 +41,7 @@ on:
 
 jobs:
   JOB_PRINT_ISSUES_AND_LAST_COMMIT:
-    runs-on: [self-hosted, ubuntu-24.04]
+    runs-on: [self-hosted, Linux, X64]
     environment: ${{ inputs.environment == '' && 'dev' || inputs.environment }}
     env:
       PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
