@@ -76,7 +76,7 @@ jobs:
           echo "current directory is: "
           pwd
           echo "listing all files and folders (hidden too!)"
-          ls -ltrha *
+          ls -ltrha
 
       - name: Run the UNIT TEST script
         run: python3 -m unittest tests/test_github_api.py
