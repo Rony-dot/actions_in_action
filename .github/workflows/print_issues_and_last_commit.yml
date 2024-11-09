@@ -45,7 +45,7 @@ jobs:
     environment: ${{ inputs.environment == '' && 'dev' || inputs.environment }}
     env:
       PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      PYTHON_VERSION: ${{ inputs.python_version == '' && 3.9 }}
+      PYTHON_VERSION: ${{ inputs.python_version == '' && 3.9 || inputs.python_version }}
     steps:
       - name: log the variables and constants
         run: |
