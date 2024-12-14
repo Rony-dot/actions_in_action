@@ -59,7 +59,7 @@ jobs:
 
   UNIT_TEST:
     runs-on: ubuntu-24.04
-    environment: ${{ inputs.environment }}
+    environment:  ${{ inputs.environment == '' && 'dev' || inputs.environment }}
     steps:
       - name: Cloning our repo
         uses: actions/checkout@v4
@@ -85,7 +85,7 @@ jobs:
 
   LINTING:
     runs-on: ubuntu-24.04
-    environment: ${{ inputs.environment }}
+    environment:  ${{ inputs.environment == '' && 'dev' || inputs.environment }}
     steps:
       - name: Cloning our repo
         uses: actions/checkout@v4
