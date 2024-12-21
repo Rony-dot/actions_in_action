@@ -21,6 +21,7 @@ ISSUES_BASE_URL = f"{GITHUB_BASE_URL}/{repo_owner}/{repo_name}/issues"
 def api_call(url):
     headers = {"Authorization": f"Bearer {PERSONAL_ACCESS_TOKEN}"}
     try:
+        print(f"calling api: {url}")
         response = requests.get(url, headers=headers)
         if response.status_code != 200:
             raise Exception(
@@ -33,6 +34,7 @@ def api_call(url):
 
 
 def get_last_commit():
+    print("Getting last commit...")
     commit_list = api_call(COMMITS_URL)
     return {
         "sha": commit_list[0].get("sha"),
@@ -60,10 +62,11 @@ def get_issues():
     return list_of_issue
 
 
-issues = get_issues()
+pprint(get_last_commit())
 
+issues = get_issues()
 pprint(len(issues))
+
 pprint("-" * 50)
 pprint(issues)
 pprint("-" * 50)
-pprint(get_last_commit())
