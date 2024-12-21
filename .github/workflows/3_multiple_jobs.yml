@@ -29,7 +29,7 @@ env:
 
 jobs:
   PRINT_ISSUES_AND_LAST_COMMIT:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-20.04
     environment: ${{ inputs.environment == '' && 'dev' || inputs.environment }}
     steps:
       - name: Tell me a secret!
@@ -60,7 +60,7 @@ jobs:
         run: python src/github_api.py
 
   UNIT_TEST:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-20.04
     environment:  ${{ inputs.environment == '' && 'dev' || inputs.environment }}
     steps:
       - name: Cloning our repo
@@ -86,7 +86,7 @@ jobs:
         run: python3 -m unittest tests/test_github_api.py
 
   LINTING:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-20.04
     environment:  ${{ inputs.environment == '' && 'dev' || inputs.environment }}
     steps:
       - name: Cloning our repo
