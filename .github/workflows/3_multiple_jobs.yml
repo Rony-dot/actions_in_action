@@ -16,7 +16,7 @@ on:
         default: '3.12'
         type: choice
         options:
-          - 3.14
+          - 3.13
           - 3.12
           - 3.9
           - 3.8
