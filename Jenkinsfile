@@ -17,6 +17,8 @@ pipeline {
         script {
             sh '''
               echo "______________________________[stage]: build w/ docker______________________________"
+              pwd
+              ls -ltrh
               hostname
               hostname -i
               python --version
@@ -43,6 +45,8 @@ pipeline {
         sh '''
           echo "______________________________[stage]: test w/ docker______________________________"
           export PYTHONUSERBASE=/tmp/python_packages
+          pwd
+          ls -ltrh
           pytest --junitxml=./junit.xml
         '''
         junit 'junit.xml'
