@@ -53,7 +53,7 @@ pipeline {
           pytest tests --junitxml=./junit.xml
         '''
         junit 'junit.xml'
-        cleanWS()
+        cleanWs()
       }
     }
   }
