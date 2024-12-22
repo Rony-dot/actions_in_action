@@ -50,7 +50,7 @@ pipeline {
           export PATH=$PYTHONUSERBASE/bin:$PATH
           pwd
           ls -ltrha
-          pytest --junitxml=./junit.xml
+          pytest tests --junitxml=./junit.xml
         '''
         junit 'junit.xml'
         cleanWS()
