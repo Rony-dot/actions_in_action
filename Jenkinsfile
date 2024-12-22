@@ -27,7 +27,6 @@ pipeline {
               python -m pip install --upgrade --user pip
               if [ -f requirements.txt ]; then pip install --user -r requirements.txt; fi
               export PATH=$PYTHONUSERBASE/bin:$PATH
-              export MY_ENV_VAR=$MY_SECRET
               #python src/github_api.py
             '''
           }
@@ -40,6 +39,9 @@ pipeline {
           label 'custom-dockerimage'
           reuseNode true
         }
+      }
+      environment {
+        PERSONAL_ACCESS_TOKEN = credentials('PERSONAL_ACCESS_TOKEN')
       }
       steps {
         sh '''
