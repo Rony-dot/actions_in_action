@@ -18,16 +18,16 @@ pipeline {
             sh '''
               echo "______________________________[stage]: build w/ docker______________________________"
               pwd
-              ls -ltrh
+              ls -ltrha
               hostname
               hostname -i
               python --version
               which python
-              export PYTHONUSERBASE=/tmp/python_packages
+              export PYTHONUSERBASE=./tmp/python_packages
               python -m pip install --upgrade --user pip
               if [ -f requirements.txt ]; then pip install --user -r requirements.txt; fi
               export PATH=$PYTHONUSERBASE/bin:$PATH
-              export MY_ENV_VAR=$MY_SECRET  # Set the environment variable using the secret
+              export MY_ENV_VAR=$MY_SECRET
               #python src/github_api.py
             '''
           }
@@ -44,9 +44,10 @@ pipeline {
       steps {
         sh '''
           echo "______________________________[stage]: test w/ docker______________________________"
-          export PYTHONUSERBASE=/tmp/python_packages
+          export PYTHONUSERBASE=./tmp/python_packages
+          export PATH=$PYTHONUSERBASE/bin:$PATH
           pwd
-          ls -ltrh
+          ls -ltrha
           pytest --junitxml=./junit.xml
         '''
         junit 'junit.xml'
