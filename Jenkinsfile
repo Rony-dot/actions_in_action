@@ -21,10 +21,6 @@ pipeline {
               hostname -i
               python --version
               which python
-              echo "image name is: $IMAGE_NAME"
-            '''
-            git branch: 'main', url: 'https://github.com/Rony-dot/actions_in_action.git'
-            sh '''
               export PYTHONUSERBASE=/tmp/python_packages
               python -m pip install --upgrade --user pip
               if [ -f requirements.txt ]; then pip install --user -r requirements.txt; fi
